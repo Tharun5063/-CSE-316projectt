@@ -9,6 +9,38 @@ struct process{
 	int start;
 	int remaintime;
 };
+
+int isFull(struct Queue* queue)
+{  return (queue->size == queue->capacity);  }
+ 
+// Queue is empty when size is 0
+int isEmpty(struct Queue* queue)
+{  return (queue->size == 0); }
+ 
+// Function to add an item to the queue.  
+// It changes rear and size
+void push(struct Queue* queue, int item)
+{
+    if (isFull(queue))
+        return;
+    queue->rear = (queue->rear + 1)%queue->capacity;
+    queue->array[queue->rear] = item;
+    queue->size = queue->size + 1;
+    printf("%d enqueued to queue\n", item);
+}
+ 
+// Function to remove an item from queue. 
+// It changes front and size
+int pop(struct Queue* queue)
+{
+    if (isEmpty(queue))
+        return INT_MIN;
+    int item = queue->array[queue->front];
+    queue->front = (queue->front + 1)%queue->capacity;
+    queue->size = queue->size - 1;
+    return item;
+}
+ 
 int main()
 {
 	int n;
